@@ -1,0 +1,21 @@
+<div>
+  <h2>Deck List</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let deck of decks">
+        <td>{{ deck.title }}</td>
+        <td>
+          <button id="viewDeckButton" (click)="onView(deck)">View</button>
+          <button id="editDeckButton" (click)="onEdit(deck)">Edit</button>
+          <button id="deleteDeckButton" (click)="onDelete(deck)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

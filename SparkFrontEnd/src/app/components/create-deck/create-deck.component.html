@@ -1,0 +1,23 @@
+<div class="new-deck-container">
+  <div class="container">
+      <h2>Create a New Deck</h2>
+      <label for="deckTitle">Deck Title:</label>
+      <input type="text" id="deckTitle" [(ngModel)]="deckTitle" />
+      <h3>Card List</h3>
+      <div *ngFor="let card of cards; let i = index">
+        <div>
+          <label for="question{{ i }}">Question:</label>
+          <input type="text" id="question{{ i }}" [(ngModel)]="cards[i].question" />
+        </div>
+        <div>
+          <label for="answer{{ i }}">Answer:</label>
+          <input type="text" id="answer{{ i }}" [(ngModel)]="cards[i].answer" />
+        </div>
+        <div id="removeButtonContainer">
+          <button id="removeCardButton" (click)="removeCard(i)">Remove Card</button>
+        </div>
+      </div>
+      <button id="addCardButton" (click)="addCard()">Add Card</button>
+    </div>
+  <button id="createDeckButton" (click)="createDeck()">Create Deck</button>
+</div>

@@ -1,0 +1,10 @@
+.footer {
+    position: sticky;
+    bottom: 0;
+    width:100%;
+    height: 40px;
+    background-color: #054A91;
+    text-align: center;
+    color: white;
+    flex-grow: 1;
+}

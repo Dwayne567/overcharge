@@ -1,0 +1,17 @@
+/* Apply styles to the main app container */
+.app-wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  
+  /* Apply styles to the content container */
+  .container {
+    flex: 1;
+  }
+  
+  /* Apply styles to the footer */
+  .app-footer {
+    flex-shrink: 0;
+  }
+  
