@@ -51,6 +51,12 @@ public class Card {
         this.question = question;
         this.answer = answer;
     }
+    
+    public Card(String question, String answer, Deck deck) {
+        this.question = question;
+        this.answer = answer;
+        this.deck = deck;
+    }
 
 	public long getId() {
         return id;

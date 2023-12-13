@@ -11,7 +11,7 @@ import com.spark.millhouse.selenium.pages.ViewDeckPage;
 import com.spark.millhouse.utils.DriverManager;
 
 @CucumberOptions(
-    features = "src/test/resources",
+    features = "src/test/resources/ViewDeck.feature",
     glue = {"com.spark.millhouse.cucumber.stepdefinitions", "ViewDeckSteps"},
     plugin = {"pretty", "html:target/cucumber-reports"}
 )

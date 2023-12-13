@@ -5,6 +5,7 @@ import static org.testng.Assert.assertEquals;
 import java.time.Duration;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -26,53 +27,60 @@ public class EditDeckSteps {
 
     @Given("I am on the edit deck page")
     public void iAmOnTheEditDeckPage() {
-        driver.get("http://localhost:4200/edit-deck/1");
-        wait.until(ExpectedConditions.urlToBe("http://localhost:4200/edit-deck/1"));
+        driver.get("http://localhost:4200/edit-deck/4");
     }
 
     @When("I clear old deck title")
     public void iClearOldDeckTitle() {
-        WebElement deckTitleInput = wait.until(ExpectedConditions.elementToBeClickable(EditDeckPage.deckTitleField));
-        deckTitleInput.clear();
+		wait.until(ExpectedConditions.visibilityOfElementLocated(EditDeckPage.deckTitleField)).clear();
     }
 
     @And("I enter a new deck title")
     public void iEnterMyDeckTitle() {
-        WebElement deckTitleInput = wait.until(ExpectedConditions.elementToBeClickable(EditDeckPage.deckTitleField));
-        deckTitleInput.sendKeys("NewDeck");
+		editDeckPage.enterDeckTitle("NewDeck");
     }
 
-    @And("I remove a card")
+    @And("I remove the old card")
     public void iClickTheRemoveCardButton() {
-        WebElement removeCardButton = wait.until(ExpectedConditions.elementToBeClickable(EditDeckPage.removeCardButton));
-        removeCardButton.click();
+		wait.until(ExpectedConditions.elementToBeClickable(EditDeckPage.removeCardButton));
+		editDeckPage.clickRemoveCardButton();
     }
-
+    
+    @And("I add a new card")
+    public void iClickTheAddCardButton() {
+        wait.until(ExpectedConditions.elementToBeClickable(EditDeckPage.addCardButton));
+		editDeckPage.clickAddCardButton();
+    }
+    
     @And("I enter a new question and answer")
     public void iEnterMyQuestionAndAnswer() {
-        WebElement questionInput = wait.until(ExpectedConditions.elementToBeClickable(EditDeckPage.questionField));
-        questionInput.sendKeys("NewQuestion");
-
-        WebElement answerInput = wait.until(ExpectedConditions.elementToBeClickable(EditDeckPage.answerField));
-        answerInput.sendKeys("NewAnswer");
+		wait.until(ExpectedConditions.visibilityOfElementLocated(EditDeckPage.questionField));
+		editDeckPage.enterQuestion("NewQuestion");
+		
+        wait.until(ExpectedConditions.visibilityOfElementLocated(EditDeckPage.answerField));
+        editDeckPage.enterAnswer("NewAnswer");
     }
 
     @And("I click the update deck button")
-    public void iClickTheCreateDeckButton() {
-        WebElement updateDeckButton = wait.until(ExpectedConditions.elementToBeClickable(EditDeckPage.updateDeckButton));
-        updateDeckButton.click();
+    public void iClickTheUpdateDeckButton() {
+		// Click the update deck button
+		WebElement updateDeckButton = wait
+				.until(ExpectedConditions.elementToBeClickable(EditDeckPage.updateDeckButton));
+		// Scroll the element into view
+		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", updateDeckButton);
+		updateDeckButton.click();
     }
 
     // Assertions and verifications:
     @Then("I should be redirected to the deck list page")
     public void iShouldBeRedirectedToDeckListPage() {
-        wait.until(ExpectedConditions.urlToBe("http://localhost:4200/deck-list"));
+		wait.until(ExpectedConditions.urlToBe("http://localhost:4200/deck-list"));
+        assertEquals("http://localhost:4200/deck-list", driver.getCurrentUrl());
     }
 
-    @Then("my new deck should be displayed")
-    public void myDeckShouldBeDisplayed() throws InterruptedException {
-        WebElement deckTitleElement = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//td[text()='NewDeck']")));
-        String deckTitle = deckTitleElement.getText();
+    @Then("My new deck should be displayed")
+    public void myNewDeckShouldBeDisplayed() throws InterruptedException {
+        String deckTitle = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//td[text()='NewDeck']"))).getText();
         assertEquals("NewDeck", deckTitle);
         Thread.sleep(5000);
     }

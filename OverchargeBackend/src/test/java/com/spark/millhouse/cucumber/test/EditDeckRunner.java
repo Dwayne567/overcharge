@@ -11,7 +11,7 @@ import com.spark.millhouse.selenium.pages.EditDeckPage;
 import com.spark.millhouse.utils.DriverManager;
 
 @CucumberOptions(
-    features = "src/test/resources",
+    features = "src/test/resources/EditDeck.feature",
     glue = {"com.spark.millhouse.cucumber.stepdefinitions", "EditDeckSteps"},
     plugin = {"pretty", "html:target/cucumber-reports"}
 )

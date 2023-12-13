@@ -9,11 +9,14 @@ public class DeckListPage {
 	public DeckListPage(WebDriver driver) {
 		this.driver = driver;
 	}
+	public static By addDeckButton = By.id("addDeckButton");
+	public static By viewDeckButton = By.id("viewDeckButton");
+	public static By editDeckButton = By.id("editDeckButton");
+	public static By deleteDeckButton = By.id("deleteDeckButton");
 	
-	By viewDeckButton = By.id("viewDeckButton");
-	By editDeckButton = By.id("editDeckButton");
-	By deleteDeckButton = By.id("deleteDeckButton");
-	
+	public void clickAddDeckButton() {
+		driver.findElement(addDeckButton).click();
+	}
 	public void clickViewDeckButton() {
 		driver.findElement(viewDeckButton).click();
 	}

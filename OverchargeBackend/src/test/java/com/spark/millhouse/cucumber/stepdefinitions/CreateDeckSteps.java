@@ -18,7 +18,6 @@ import io.cucumber.java.en.When;
 import com.spark.millhouse.cucumber.test.CreateDeckRunner;
 import com.spark.millhouse.selenium.pages.CreateDeckPage;
 
-
 public class CreateDeckSteps {
 
     public static WebDriver driver = CreateDeckRunner.driver;
@@ -28,32 +27,32 @@ public class CreateDeckSteps {
     @Given("I am on the create deck page")
     public void iAmOnTheCreateDeckPage() {
         driver.get("http://localhost:4200/create-deck");
-        wait.until(ExpectedConditions.urlToBe("http://localhost:4200/create-deck"));
     }
 
     @When("I enter my deck title")
     public void iEnterMyDeckTitle() {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("deckTitle"))); // Replace with the actual ID
+        wait.until(ExpectedConditions.visibilityOfElementLocated(CreateDeckPage.deckTitleField));
         createDeckPage.enterDeckTitle("Deck1");
     }
 
     @And("I click the add card button")
     public void iClickTheAddCardButton() {
-        wait.until(ExpectedConditions.elementToBeClickable(By.id("addCardButton"))); // Replace with the actual ID
+        wait.until(ExpectedConditions.elementToBeClickable(CreateDeckPage.addCardButton));
         createDeckPage.clickAddCardButton();
     }
 
     @And("I enter my question and answer")
     public void iEnterMyQuestionAndAnswer() {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("question0"))); // Replace with the actual ID
+        wait.until(ExpectedConditions.visibilityOfElementLocated(CreateDeckPage.questionField));
         createDeckPage.enterQuestion("Question1");
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("answer0"))); // Replace with the actual ID
+
+        wait.until(ExpectedConditions.visibilityOfElementLocated(CreateDeckPage.answerField));
         createDeckPage.enterAnswer("Answer1");
     }
 
     @And("I click the create deck button")
     public void iClickTheCreateDeckButton() {
-        wait.until(ExpectedConditions.elementToBeClickable(By.id("createDeckButton"))); // Replace with the actual ID
+        wait.until(ExpectedConditions.elementToBeClickable(CreateDeckPage.createDeckButton));
         createDeckPage.clickCreateDeckButton();
     }
 
@@ -66,8 +65,7 @@ public class CreateDeckSteps {
 
     @Then("my deck should be displayed")
     public void myDeckShouldBeDisplayed() throws InterruptedException {
-        WebElement deckTitleElement = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//td[text()='Deck1']")));
-        String deckTitle = deckTitleElement.getText();
+    	String deckTitle = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//td[text()='Deck1']"))).getText();
         assertEquals("Deck1", deckTitle);
         Thread.sleep(5000);
     }

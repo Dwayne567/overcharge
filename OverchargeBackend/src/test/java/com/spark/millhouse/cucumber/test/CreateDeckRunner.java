@@ -11,7 +11,7 @@ import com.spark.millhouse.selenium.pages.CreateDeckPage;
 import com.spark.millhouse.utils.DriverManager;
 
 @CucumberOptions(
-    features = "src/test/resources",
+    features = "src/test/resources/CreateDeck.feature",
     glue = {"com.spark.millhouse.cucumber.stepdefinitions", "CreateDeckSteps"},
     plugin = {"pretty", "html:target/cucumber-reports"}
 )

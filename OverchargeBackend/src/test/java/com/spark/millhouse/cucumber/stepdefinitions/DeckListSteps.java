@@ -22,22 +22,22 @@ public class DeckListSteps {
 
     public static WebDriver driver = DeckListRunner.driver;
     public static DeckListPage deckListPage = DeckListRunner.deckListPage;
-
     private WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
     @Given("I am on the deck list page")
     public void iAmOnTheDeckListPage() {
-        wait.until(ExpectedConditions.urlToBe("http://localhost:4200/deck-list"));
         driver.get("http://localhost:4200/deck-list");
     }
 
     @When("I click the view deck button")
     public void iClickTheViewDeckButton() {
-        wait.until(ExpectedConditions.elementToBeClickable(By.id("viewDeckButton"))).click();
+        wait.until(ExpectedConditions.elementToBeClickable(DeckListPage.viewDeckButton));
+        deckListPage.clickViewDeckButton();
     }
 
     @Then("I should be directed to the view deck page")
     public void iShouldBeDirectedToTheViewDeckPage() {
+        wait.until(ExpectedConditions.urlToBe("http://localhost:4200/view-deck/1"));
         assertEquals("http://localhost:4200/view-deck/1", driver.getCurrentUrl());
     }
 
@@ -48,11 +48,13 @@ public class DeckListSteps {
 
     @And("I click the edit deck button")
     public void iClickTheEditDeckButton() {
-        wait.until(ExpectedConditions.elementToBeClickable(By.id("editDeckButton"))).click();
+        wait.until(ExpectedConditions.elementToBeClickable(DeckListPage.editDeckButton));
+        deckListPage.clickEditDeckButton();
     }
 
     @Then("I should be directed to the edit deck page")
     public void iShouldBeDirectedToTheEditDeckPage() {
+        wait.until(ExpectedConditions.urlToBe("http://localhost:4200/edit-deck/1"));
         assertEquals("http://localhost:4200/edit-deck/1", driver.getCurrentUrl());
     }
 
@@ -63,9 +65,12 @@ public class DeckListSteps {
 
     @And("I click the delete deck button")
     public void iClickTheDeleteButton() throws InterruptedException {
-        wait.until(ExpectedConditions.elementToBeClickable(By.id("deleteDeckButton"))).click();
-        wait.until(ExpectedConditions.alertIsPresent());
-        Alert alert = driver.switchTo().alert();
+        wait.until(ExpectedConditions.elementToBeClickable(DeckListPage.deleteDeckButton));
+        deckListPage.clickDeleteDeckButton();
+        
+        // Switch to the alert
+        Alert alert = wait.until(ExpectedConditions.alertIsPresent());
+        // Click the "OK" button on the alert
         alert.accept();
         Thread.sleep(5000);
     }

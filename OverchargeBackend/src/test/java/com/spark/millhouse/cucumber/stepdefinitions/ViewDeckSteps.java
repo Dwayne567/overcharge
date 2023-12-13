@@ -26,32 +26,31 @@ public class ViewDeckSteps {
 
     @Given("I am on the view deck page")
     public void iAmOnTheViewDeckPage() {
-        wait.until(ExpectedConditions.urlToBe("http://localhost:4200/view-deck"));
-        driver.get("http://localhost:4200/view-deck");
+        driver.get("http://localhost:4200/view-deck/4");
     }
 
     @When("I click on the flashcard")
     public void iClickOnTheFlashcard() {
-        WebElement flashcard = wait.until(ExpectedConditions.elementToBeClickable(By.id("flashcard")));
-        flashcard.click();
+        wait.until(ExpectedConditions.elementToBeClickable(ViewDeckPage.cardButton));
+        viewDeckPage.clickFlashCard();
     }
 
     @Then("I should be able to see the answer")
     public void iShouldBeAbleToSeeTheAnswer() {
-        WebElement answerElement = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[text()='Answer1']")));
-        assertEquals("Answer1", answerElement.getText());
+        String cardAnswer = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[text()='Answer1']"))).getText();
+        assertEquals("Answer1", cardAnswer);
     }
 
     @And("I click on the flashcard again")
     public void iClickOnTheFlashcardAgain() {
-        WebElement flashcard = wait.until(ExpectedConditions.elementToBeClickable(By.id("flashcard")));
-        flashcard.click();
+        wait.until(ExpectedConditions.elementToBeClickable(ViewDeckPage.cardButton));
+        viewDeckPage.clickFlashCard();
     }
 
     @Then("I should be able to see the question")
     public void iShouldBeAbleToSeeTheQuestion() throws InterruptedException {
-        WebElement questionElement = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[text()='Question1']")));
-        assertEquals("Question1", questionElement.getText());
+        String cardQuestion = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[text()='Question1']"))).getText();
+        assertEquals("Question1", cardQuestion);
         Thread.sleep(5000);
     }
 }

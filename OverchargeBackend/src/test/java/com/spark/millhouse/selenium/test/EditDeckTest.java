@@ -8,11 +8,11 @@ import org.testng.annotations.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import com.spark.millhouse.selenium.pages.CreateDeckPage;
 import com.spark.millhouse.selenium.pages.EditDeckPage;
 import com.spark.millhouse.utils.DriverManager;
 
@@ -29,35 +29,26 @@ public class EditDeckTest {
 	}
 
 	@Test
-	public void testCreateDeck() {
-		driver.get("http://localhost:4200/edit-deck/1");
-
-		// Wait for the deck title element to be clickable
+	public void testEditDeck() {
+    	// Navigating the browser to the URL "http://localhost:4200/edit-deck/4".
+		driver.get("http://localhost:4200/edit-deck/4");
+		
+        // Creating an instance of the WebDriverWait class
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-		WebElement deckTitleInput = wait.until(ExpectedConditions.elementToBeClickable(EditDeckPage.deckTitleField));
+		wait.until(ExpectedConditions.visibilityOfElementLocated(EditDeckPage.deckTitleField)).clear();
+		editDeckPage.enterDeckTitle("NewDeck");
 
-		// Clear the deck title
-		deckTitleInput.clear();
+		wait.until(ExpectedConditions.elementToBeClickable(EditDeckPage.removeCardButton));
+		editDeckPage.clickRemoveCardButton();
+		
+        wait.until(ExpectedConditions.elementToBeClickable(EditDeckPage.addCardButton));
+		editDeckPage.clickAddCardButton();
 
-		// Enter the new deck title
-		deckTitleInput.sendKeys("NewDeck");
-
-		// Click the remove card button
-		WebElement removeCardButton = wait
-				.until(ExpectedConditions.elementToBeClickable(EditDeckPage.removeCardButton));
-		removeCardButton.click();
-
-		// Click the add card button
-		WebElement addCardButton = wait.until(ExpectedConditions.elementToBeClickable(EditDeckPage.addCardButton));
-		addCardButton.click();
-
-		// Enter the new question
-		WebElement questionInput = wait.until(ExpectedConditions.elementToBeClickable(EditDeckPage.questionField));
-		questionInput.sendKeys("NewQuestion");
-
-		// Enter the new answer
-		WebElement answerInput = wait.until(ExpectedConditions.elementToBeClickable(EditDeckPage.answerField));
-		answerInput.sendKeys("NewAnswer");
+		wait.until(ExpectedConditions.visibilityOfElementLocated(EditDeckPage.questionField));
+		editDeckPage.enterQuestion("NewQuestion");
+		
+        wait.until(ExpectedConditions.visibilityOfElementLocated(EditDeckPage.answerField));
+        editDeckPage.enterAnswer("NewAnswer");
 
 		// Click the update deck button
 		WebElement updateDeckButton = wait
@@ -65,22 +56,30 @@ public class EditDeckTest {
 		// Scroll the element into view
 		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", updateDeckButton);
 		updateDeckButton.click();
-
+		
 		// Assertions and verifications:
 
 		// Example 1: Check if the user is redirected to the deck list page after
 		// successful deck creation
 		wait.until(ExpectedConditions.urlToBe("http://localhost:4200/deck-list"));
+        assertEquals("http://localhost:4200/deck-list", driver.getCurrentUrl());
 
-		// Example 2: Verify that the deck title is displayed on the deck list page
-		WebElement deckTitleElement = wait
-				.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//td[text()='NewDeck']")));
-		String deckTitle = deckTitleElement.getText();
-		assertEquals("NewDeck", deckTitle);
+        // Example 2: Verify that the deck title is displayed on the deck list page
+        String deckTitle = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//td[text()='NewDeck']"))).getText();
+        assertEquals("NewDeck", deckTitle);
 	}
 
 	@AfterSuite
-	public void tearDown() {
-		driver.quit();
-	}
+    public void tearDown() {
+        try {
+            System.out.println("Tearing down the test");
+            if (driver != null) {
+                System.out.println("Closing the WebDriver");
+                driver.quit();
+            }
+        } catch (Exception e) {
+            // Log or print the exception for debugging purposes
+            e.printStackTrace();
+        }
+    }
 }
