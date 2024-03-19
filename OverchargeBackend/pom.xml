@@ -12,6 +12,7 @@
 	<groupId>com.codeWithProjects</groupId>
 	<artifactId>ecom</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging>
 	<name>ecom</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
@@ -82,6 +83,8 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
+                    			<warSourceDirectory>src/main/webapp</warSourceDirectory>
+                    			<failOnMissingWebXml>false</failOnMissingWebXml>
 					<excludes>
 						<exclude>
 							<groupId>org.projectlombok</groupId>
