@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring accessors="true" comment="Delete 4 elements from project &apos;ecom&apos;&#x0D;&#x0A;- Original project: &apos;ecom&apos;&#x0D;&#x0A;- Original elements:&#x0D;&#x0A;     BaseTest&#x0D;&#x0A;     Config&#x0D;&#x0A;     ExcelReaders_DataProvider&#x0D;&#x0A;     ExtentReport" description="Delete elements" element1="Config" element2="BaseTest" element3="ExcelReaders_DataProvider" element4="ExtentReport" elements="0" flags="589830" id="org.eclipse.jdt.ui.delete" resources="4" stamp="1710034293407" subPackages="false" version="1.0"/>
+</session>

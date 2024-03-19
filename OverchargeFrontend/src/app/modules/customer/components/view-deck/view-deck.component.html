@@ -1,0 +1,13 @@
+<div class="view-deck-container">
+<div class="title-container">
+  <h3>View Deck</h3>
+  <p class="deck-label">Deck Title</p>
+  <p class="deck-title"> {{ deck.title }} </p>
+</div>
+  <div class="flashcard-container">
+    <div id="flashcard" class="flashcard" *ngFor="let card of deck.cards" [class.flipped]="card.flipped" (click)="flipCard(card)">
+      <div class="front">{{ card.question }}</div>
+      <div class="back">{{ card.answer }}</div>
+    </div>
+  </div>
+</div>

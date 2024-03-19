@@ -1,0 +1,34 @@
+package com.codeWithProjects.ecom.entity;
+
+import com.codeWithProjects.ecom.dto.customer.CardDto;
+import jakarta.persistence.*;
+import lombok.Data;
+
+@Entity
+@Data
+@Table(name="cards")
+public class Card {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+
+    @Column(name = "question")
+    private String question;
+
+    @Lob
+    @Column(name = "answer")
+    private String answer;
+
+    @Column(name = "deck_id")
+    private Long deckId;
+    
+    public CardDto getDto(){
+    	CardDto cardDto = new CardDto();
+    	cardDto.setId(id);
+        cardDto.setQuestion(question);
+        cardDto.setAnswer(answer);
+        return cardDto;
+    }
+}
+
+
