@@ -83,7 +83,7 @@
 	</dependencies>
 
 	<build>
-		<finalName>overchargebackend</finalName>
+		<finalName>overcharge</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
