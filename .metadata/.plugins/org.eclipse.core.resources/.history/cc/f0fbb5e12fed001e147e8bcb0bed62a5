@@ -1,0 +1,9 @@
+package com.spark.overcharge.dto;
+import lombok.Data;
+
+@Data
+public class CardDto {
+    private Long id;
+    private String question;
+    private String answer;
+}

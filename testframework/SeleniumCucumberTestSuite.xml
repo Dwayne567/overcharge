@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="SeleniumCucumberSuite" parallel="false" thread-count="4">
+	<test name="SeleniumCucumberTest" preserve-order="true">
+		<classes>
+			<class name="com.spark.millhouse.cucumber.test.CreateDeckRunner" />
+			<class name="com.spark.millhouse.cucumber.test.ViewDeckRunner" />
+			<class name="com.spark.millhouse.cucumber.test.EditDeckRunner" />
+			<class name="com.spark.millhouse.cucumber.test.DeckListRunner" />
+		</classes>
+	</test> <!--
+	Test -->
+</suite> <!--
+Suite -->

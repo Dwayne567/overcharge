@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="SeleniumSuite" parallel="false" thread-count="4">
+	<test name="SeleniumTest">
+		<classes>
+			<class name="com.spark.millhouse.selenium.test.CreateDeckTest" />
+			<class name="com.spark.millhouse.selenium.test.ViewDeckTest" />
+			<class name="com.spark.millhouse.selenium.test.EditDeckTest" />
+			<class name="com.spark.millhouse.selenium.test.DeckListTest" />
+		</classes>
+	</test> <!--
+	Test -->
+</suite> <!--
+Suite -->

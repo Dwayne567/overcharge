@@ -1,0 +1,32 @@
+<div class="main-app-container">
+    <div *ngIf="!isUserLoggedIn && !isAdminLoggedIn">
+        <mat-toolbar color="primary" class="navbar">
+            <span class="navbar-brand">Overcharge</span>
+            <span class="spacer"></span>
+            <button mat-button routerLink="/register" routerLinkActive="active">Register</button>
+            <button mat-button routerLink="/login" routerLinkActive="active">Login</button>
+        </mat-toolbar>
+    </div>
+    <div *ngIf="isAdminLoggedIn">
+        <mat-toolbar color="primary" class="navbar">
+            <span class="navbar-brand">Overcharge</span>
+            <span class="spacer"></span>
+            <button mat-button routerLink="/admin/dashboard" routerLinkActive="active">Dashboard</button>
+            <button mat-button routerLinkActive="active" (click)="logout()">Logout</button>
+        </mat-toolbar>
+    </div>
+    <div *ngIf="isUserLoggedIn">
+        <mat-toolbar color="primary" class="navbar">
+            <span class="navbar-brand">Overcharge</span>
+            <span class="spacer"></span>
+            <button mat-button routerLink="/user/dashboard" routerLinkActive="active">Dashboard</button>
+            <button mat-button routerLink="/user/deck-list" routerLinkActive="active">Deck List</button>
+            <button mat-button routerLink="/user/create-deck" routerLinkActive="active">New Deck</button>
+            <button mat-button routerLink="/user/profile" routerLinkActive="active">Profile</button>
+            <button mat-button routerLinkActive="active" (click)="logout()">Logout</button>
+        </mat-toolbar>
+    </div>
+    <div class="router-outlet-container">
+        <router-outlet></router-outlet>
+    </div>
+</div>

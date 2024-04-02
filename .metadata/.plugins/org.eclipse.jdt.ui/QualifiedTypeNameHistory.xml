@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+    <fullyQualifiedTypeName name="jakarta.servlet.ServletRequest"/>
+    <fullyQualifiedTypeName name="java.io.IOException"/>
+    <fullyQualifiedTypeName name="org.hibernate.annotations.OnDelete"/>
+    <fullyQualifiedTypeName name="org.hibernate.annotations.OnDeleteAction"/>
+    <fullyQualifiedTypeName name="java.util.stream.Collectors"/>
+    <fullyQualifiedTypeName name="com.spark.overcharge.exceptions.UserNotFoundException"/>
+    <fullyQualifiedTypeName name="com.spark.overcharge.exceptions.DeckNotFoundException"/>
+    <fullyQualifiedTypeName name="com.spark.overcharge.exceptions.CardNotFoundException"/>
+    <fullyQualifiedTypeName name="com.fasterxml.jackson.annotation.JsonManagedReference"/>
+    <fullyQualifiedTypeName name="com.spark.overcharge.repository.DeckRepository"/>
+    <fullyQualifiedTypeName name="java.util.ArrayList"/>
+    <fullyQualifiedTypeName name="java.util.Optional"/>
+    <fullyQualifiedTypeName name="java.util.List"/>
+    <fullyQualifiedTypeName name="jakarta.transaction.Transactional"/>
+    <fullyQualifiedTypeName name="org.springframework.beans.factory.annotation.Value"/>
+    <fullyQualifiedTypeName name="org.springframework.context.annotation.Configuration"/>
+    <fullyQualifiedTypeName name="org.springframework.context.annotation.Bean"/>
+    <fullyQualifiedTypeName name="org.springframework.boot.CommandLineRunner"/>
+    <fullyQualifiedTypeName name="com.spark.overcharge.entity.User"/>
+    <fullyQualifiedTypeName name="com.spark.overcharge.repository.UserRepository"/>
+    <fullyQualifiedTypeName name="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
+    <fullyQualifiedTypeName name="com.spark.overcharge.enums.UserRole"/>
+    <fullyQualifiedTypeName name="com.spark.overcharge.entity.Deck"/>
+    <fullyQualifiedTypeName name="com.spark.overcharge.entity.Card"/>
+</qualifiedTypeNameHistroy>

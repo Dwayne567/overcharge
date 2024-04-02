@@ -1,0 +1,103 @@
+package com.spark.overcharge.utility;
+
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+import com.spark.overcharge.entity.Card;
+import com.spark.overcharge.entity.Deck;
+import com.spark.overcharge.entity.User;
+import com.spark.overcharge.enums.UserRole;
+import com.spark.overcharge.repository.CardRepository;
+import com.spark.overcharge.repository.DeckRepository;
+import com.spark.overcharge.repository.UserRepository;
+
+@Configuration
+public class DatabaseInitializer {
+
+    @Bean
+    CommandLineRunner initDatabase(UserRepository userRepository, DeckRepository deckRepository, CardRepository cardRepository, BCryptPasswordEncoder passwordEncoder) {
+	    return args -> {
+	        if (userRepository.count() == 1) {
+	            User user = new User();
+	            user.setRole(UserRole.USER);
+	            user.setId(2L);
+	            user.setEmail("bob@gmail.com");
+	            user.setName("bob");
+	            user.setPassword(passwordEncoder.encode("money"));
+	            user.setImg(null);
+	            userRepository.save(user);
+
+	            // Software Development deck
+	            Deck deck1 = new Deck();
+	            deck1.setUser(user);
+	            deck1.setTitle("Software Development");
+	            deckRepository.save(deck1);
+
+	            String[][] cards1 = {
+	                {"What is the role of a software developer?", "Software developers design, code, and test software applications."},
+	                {"Explain the Agile development methodology.", "Agile is an iterative and incremental approach to software development."},
+	                {"What is version control?", "Version control is a system that records changes to a file or set of files over time so that you can recall specific versions later."},
+	                {"Define Continuous Integration (CI).", "Continuous Integration is a development practice that requires developers to integrate code into a shared repository several times a day."},
+	                {"What is the purpose of unit testing?", "Unit testing is the practice of testing individual units or pieces of code to ensure they work correctly."}
+	            };
+
+	            for (String[] cardData : cards1) {
+	                Card card = new Card();
+	                card.setDeck(deck1);
+	                card.setUser(user);
+	                card.setQuestion(cardData[0]);
+	                card.setAnswer(cardData[1]);
+	                cardRepository.save(card);
+	            }
+
+	            // DevOps deck
+	            Deck deck2 = new Deck();
+	            deck2.setUser(user);
+	            deck2.setTitle("DevOps");
+	            deckRepository.save(deck2);
+
+	            String[][] cards2 = {
+	                {"Explain the concept of DevOps.", "DevOps is a set of practices that combines software development (Dev) and IT operations (Ops) to shorten the systems development life cycle."},
+	                {"What is Continuous Deployment?", "Continuous Deployment is the practice of automatically deploying every change that passes automated tests to production."},
+	                {"Define Infrastructure as Code (IaC).", "Infrastructure as Code is the process of managing and provisioning computing infrastructure through machine-readable script files."},
+	                {"Name popular DevOps tools.", "Popular DevOps tools include Jenkins, Docker, Ansible, and Kubernetes."},
+	                {"What is the goal of continuous monitoring in DevOps?", "Continuous monitoring aims to ensure that applications and infrastructure are performing as expected and to identify and resolve issues quickly."}
+	            };
+
+	            for (String[] cardData : cards2) {
+	                Card card = new Card();
+	                card.setDeck(deck2);
+	                card.setUser(user);
+	                card.setQuestion(cardData[0]);
+	                card.setAnswer(cardData[1]);
+	                cardRepository.save(card);
+	            }
+
+	            // Java deck
+	            Deck deck3 = new Deck();
+	            deck3.setUser(user);
+	            deck3.setTitle("Java");
+	            deckRepository.save(deck3);
+
+	            String[][] cards3 = {
+	                {"What is Java?", "Java is a high-level, class-based, object-oriented programming language designed to have as few implementation dependencies as possible."},
+	                {"Explain the difference between JDK and JRE.", "JDK (Java Development Kit) is a software development kit used to develop Java applications. JRE (Java Runtime Environment) is the runtime environment for running Java applications."},
+	                {"What is the purpose of the \"public static void main\" method in Java?", "The \"public static void main\" method is the entry point of a Java program. It is the method that the Java Virtual Machine (JVM) calls to run the program."},
+	                {"What is an interface in Java?", "An interface in Java is a collection of abstract methods. Classes implement interfaces to provide specific behavior."},
+	                {"Explain exception handling in Java.", "Exception handling in Java involves using try, catch, and throw statements to handle runtime errors and exceptions."}
+	            };
+
+	            for (String[] cardData : cards3) {
+	                Card card = new Card();
+	                card.setDeck(deck3);
+	                card.setUser(user);
+	                card.setQuestion(cardData[0]);
+	                card.setAnswer(cardData[1]);
+	                cardRepository.save(card);
+	            }
+	        }
+	    };
+	}
+}

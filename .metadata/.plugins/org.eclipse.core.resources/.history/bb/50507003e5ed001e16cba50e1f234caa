@@ -1,0 +1,53 @@
+package com.spark.overcharge.utility;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+import com.spark.overcharge.entity.Card;
+import com.spark.overcharge.entity.Deck;
+import com.spark.overcharge.entity.User;
+import com.spark.overcharge.enums.UserRole;
+import com.spark.overcharge.repository.CardRepository;
+import com.spark.overcharge.repository.DeckRepository;
+import com.spark.overcharge.repository.UserRepository;
+
+@Configuration
+public class DatabaseInitializer {
+
+	@Autowired
+	private DeckRepository deckRepository;
+
+	@Autowired
+	private CardRepository cardRepository;
+	
+    @Bean
+    CommandLineRunner initDatabase(UserRepository userRepository, BCryptPasswordEncoder passwordEncoder) {
+	    return args -> {
+	        if (userRepository.count() == 1) {
+	            User user = new User();
+	            user.setRole(UserRole.USER);
+	            user.setId(2L);
+	            user.setEmail("bob@gmail.com");
+	            user.setName("bob");
+	            user.setPassword(passwordEncoder.encode("money"));
+	            user.setImg(null);
+	            userRepository.save(user);
+	            
+	            Deck deck = new Deck();
+	            deck.setUser(user);
+	            deck.setTitle("Software Development");
+	            deckRepository.save(deck);
+
+	            Card card = new Card();
+	            card.setDeck(deck);
+	            card.setUser(user);
+	            card.setQuestion("What is the role of a software developer?");
+	            card.setAnswer("Software developers design, code, and test software applications.");
+	            cardRepository.save(card);
+	        }
+	    };
+	}
+}

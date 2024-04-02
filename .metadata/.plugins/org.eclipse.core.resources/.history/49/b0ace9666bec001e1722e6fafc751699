@@ -1,0 +1,27 @@
+package com.spark.overcharge.services;
+
+import com.spark.overcharge.dto.UserDto;
+import com.spark.overcharge.security.SignupRequest;
+
+import java.io.IOException;
+import java.util.List;
+
+import org.springframework.http.ResponseEntity;
+
+public interface UserService {
+    Boolean hasUserWithEmail(String email);
+    
+    UserDto createUser(SignupRequest signupRequest);
+
+    UserDto getUserById(Long userId);
+
+    UserDto updateUser(UserDto userDto) throws IOException;
+
+   ResponseEntity<?> updatePasswordById(UserDto userDto);
+	
+    List<UserDto> getAllUsers();
+    
+    List<UserDto> searchUserByName(String name);
+
+    public boolean deleteUser(Long id);
+}

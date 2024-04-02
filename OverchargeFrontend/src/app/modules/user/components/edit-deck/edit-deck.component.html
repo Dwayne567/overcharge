@@ -1,0 +1,27 @@
+<div class="edit-deck-container">
+  <div class="container">
+    <div class="edit-deck">
+      <h2>Edit Deck</h2>
+      <input type="text" id="deckTitle" name="deckTitle" [(ngModel)]="deck.title" placeholder="Deck Title" />
+      <h2>Edit Cards</h2>
+      <div class="newcard" *ngFor="let card of deck.cards; let i = index">
+        <h4>Card {{ i + 1 }}</h4>
+        <div>
+          <label for="question{{ i }}">Question:</label>
+          <input type="text" [id]="'question' + i" [name]="'question' + i" [(ngModel)]="deck.cards[i].question" />
+        </div>
+        <div>
+          <label for="answer{{ i }}">Answer:</label>
+          <input type="text" [id]="'answer' + i" [name]="'answer' + i" [(ngModel)]="deck.cards[i].answer" />
+        </div>
+        <div id="removeButtonContainer">
+          <button id="removeCardButton" (click)="removeCard(i)">Remove Card</button>
+        </div>
+      </div>
+      <button id="addCardButton" (click)="addCard()">Add Card</button>
+    </div>
+    <div id="updateDeckButtonContainer">
+      <button id="updateDeckButton" (click)="updateDeck()">Update Deck</button>
+    </div>
+  </div>
+</div>

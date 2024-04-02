@@ -1,0 +1,144 @@
+package com.spark.overcharge.controller;
+
+import com.spark.overcharge.dto.UserDto;
+import com.spark.overcharge.entity.User;
+import com.spark.overcharge.repository.UserRepository;
+import com.spark.overcharge.security.AuthenticationRequest;
+import com.spark.overcharge.security.ChangePasswordDto;
+import com.spark.overcharge.security.SignupRequest;
+import com.spark.overcharge.services.UserService;
+import com.spark.overcharge.util.JwtUtil;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.web.bind.annotation.*;
+
+
+import java.io.IOException;
+import java.util.Enumeration;
+import java.util.List;
+import java.util.Optional;
+
+@RestController
+@RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:4200")
+public class UserController {
+
+	private final AuthenticationManager authenticationManager;
+
+	private final UserDetailsService userDetailsService;
+	
+    private final UserService userService;
+
+	private final UserRepository userRepository;
+
+	private final JwtUtil jwtUtil;
+
+	public static final String TOKEN_PREFIX = "Bearer ";
+	public static final String HEADER_STRING = "Authorization";
+
+	@PostMapping("/sign-up")
+	public ResponseEntity<?> signupUser(@RequestBody SignupRequest signupRequest) {
+		if (userService.hasUserWithEmail(signupRequest.getEmail())) {
+			return new ResponseEntity<>("User already exists", HttpStatus.NOT_ACCEPTABLE);
+		}
+
+		UserDto userDto = userService.createUser(signupRequest);
+		return new ResponseEntity<>(userDto, HttpStatus.OK);
+	}
+
+	@PostMapping("/authenticate")
+	public void createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest,
+			HttpServletResponse response) throws IOException, JSONException {
+
+		try {
+			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
+					authenticationRequest.getUsername(), authenticationRequest.getPassword()));
+		} catch (BadCredentialsException e) {
+			throw new BadCredentialsException("Incorrect username or password.");
+		}
+
+		final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
+		Optional<User> optionalUser = userRepository.findFirstByEmail(userDetails.getUsername());
+		final String jwt = jwtUtil.generateToken(userDetails.getUsername());
+
+		if (optionalUser.isPresent()) {
+			response.getWriter().write(new JSONObject().put("userId", optionalUser.get().getId())
+					.put("role", optionalUser.get().getRole()).toString());
+
+			response.addHeader("Access-Control-Expose-Headers", "Authorization");
+			response.addHeader("Access-Control-Allow-Headers",
+					"Authorization, X-PINGOTHER, Origin, " + "X-Requested-With, Content-Type, Accept, X-Custom-header");
+			response.addHeader(HEADER_STRING, TOKEN_PREFIX + jwt);
+		}
+	}
+
+	@GetMapping("/api/user/{userId}")
+	public ResponseEntity<UserDto> getUserById(@PathVariable Long userId) {
+		UserDto userDto = userService.getUserById(userId);
+		if (userDto != null) {
+			return ResponseEntity.ok(userDto);
+		} else {
+			return ResponseEntity.notFound().build();
+		}
+	}
+
+	@PostMapping("/api/update")
+	public ResponseEntity<UserDto> updateProfile(@ModelAttribute UserDto userDto) throws IOException {
+		UserDto updatedUser = userService.updateUser(userDto);
+		if (updatedUser != null) {
+			return ResponseEntity.ok(updatedUser);
+		} else {
+			return ResponseEntity.notFound().build();
+		}
+	}
+
+	@PostMapping("/api/updatePassword")
+	public ResponseEntity<?> updatePassword(@RequestBody ChangePasswordDto changePasswordDto) {
+		try {
+			return userService.updatePasswordById(changePasswordDto);
+		} catch (Exception ex) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Something went wrong");
+		}
+	}
+	
+
+    @GetMapping("/users")
+    public ResponseEntity<List<UserDto>> getAllUsers(){
+        return ResponseEntity.ok(userService.getAllUsers());
+    }
+
+
+    @DeleteMapping("/user/{userId}")
+    public ResponseEntity<Void> deleteUser(@PathVariable Long userId, HttpServletRequest request){
+        Enumeration<String> headerNames = request.getHeaderNames();
+        while (headerNames.hasMoreElements()) {
+            String headerName = headerNames.nextElement();
+            System.out.println(headerName + ": " + request.getHeader(headerName));
+        }
+        boolean deleted = userService.deleteUser(userId);
+        if(deleted){
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.notFound().build();
+    }
+    
+//  @DeleteMapping("/user/{userId}")
+//  public ResponseEntity<Void> deleteUser(@PathVariable Long userId){
+//      boolean deleted = userService.deleteUser(userId);
+//      if(deleted){
+//          return ResponseEntity.noContent().build();
+//      }
+//      return ResponseEntity.notFound().build();
+//  }
+}

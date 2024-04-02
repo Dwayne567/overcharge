@@ -1,0 +1,31 @@
+package com.spark.overcharge.controller;
+
+import com.spark.overcharge.dto.CardDto;
+import com.spark.overcharge.services.CardService;
+
+import lombok.RequiredArgsConstructor;
+
+import java.util.List;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+
+@RestController
+@RequestMapping("/api/customer")
+@RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:4200")
+public class CardController {
+	
+	private final CardService cardService;
+    
+//    @GetMapping("/cards/{deckId}")
+//    public ResponseEntity<List<CardDto>> getCardsByDeckId(@PathVariable Long deckId){
+//    	List<CardDto> cardDto = cardService.getCardsByDeckId(deckId);
+//        if(cardDto != null){
+//            return ResponseEntity.ok(cardDto);
+//        }else{
+//            return ResponseEntity.notFound().build();
+//        }
+//    }
+}

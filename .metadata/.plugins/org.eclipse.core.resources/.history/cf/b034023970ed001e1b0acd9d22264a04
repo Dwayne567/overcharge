@@ -1,0 +1,13 @@
+spring.application.name=OverchargeBackend
+
+#data source properties
+spring.datasource.url=jdbc:mysql://localhost:3306/ecom_code_with_projects
+spring.datasource.username=root
+spring.datasource.password=tINZIUWlFANXi6Q0
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+
+#jwt.secret=supersecret
+app.client.url=http://localhost:4200/login

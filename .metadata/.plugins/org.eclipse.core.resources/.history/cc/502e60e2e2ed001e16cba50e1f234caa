@@ -1,0 +1,30 @@
+package com.spark.overcharge.utility;
+
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+import com.spark.overcharge.entity.User;
+import com.spark.overcharge.enums.UserRole;
+import com.spark.overcharge.repository.UserRepository;
+
+@Configuration
+public class DatabaseInitializer {
+
+    @Bean
+    CommandLineRunner initDatabase(UserRepository userRepository, BCryptPasswordEncoder passwordEncoder) {
+	    return args -> {
+	        if (userRepository.count() == 0) { // Only insert data if the users table is empty
+	            User user = new User();
+	            user.setRole(UserRole.ADMIN); // Set the role to ADMIN
+	            user.setId(3L);
+	            user.setEmail("bill@gmail.com");
+	            user.setName("bill");
+	            user.setPassword(passwordEncoder.encode("money")); // Hash the password
+	            user.setImg(null);
+	            userRepository.save(user);
+	        }
+	    };
+	}
+}

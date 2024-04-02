@@ -1,0 +1,21 @@
+<div class="user-list-container">
+  <h3>User List</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Username</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of users">
+        <td class="user-title">{{ user.email }}</td>
+        <td>
+          <!-- <button id="viewUserButton" (click)="onView(user)">View</button>
+          <button id="editUserButton" (click)="onEdit(user)">Edit</button> -->
+          <button id="deleteUserButton" (click)="onDelete(user)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
